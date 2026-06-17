@@ -1,0 +1,26 @@
+name: 🌍 Actualizar Resultados Mundial 2026
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Cada 2 horas
+  workflow_dispatch:  # También manualmente
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Instalar dependencias
+        run: pip install requests
+      
+      - name: Actualizar resultados
+        env:
+          GITHUB_TOKEN: ${{ secrets.MUNDIAL_TOKEN }}
+        run: python actualizar_resultados.py
